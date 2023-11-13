@@ -1,10 +1,18 @@
 from flask import Flask, redirect, url_for, render_template
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
 
 # Create a Flask instance.
 app = Flask(__name__)
+app.config['SECRET_KEY'] = "my secret key for now"
 
+# create a Form Class
+class NamerForm(FlaskForm):
+    name = StringField("What's Your Name", validators=[DataRequired()])
+    submit = SubmitField("Submit")
 
-# Create a route decorator
+# Create route decorators
 
 # localhost/
 @app.route('/')
@@ -40,5 +48,19 @@ def page_not_found(e):
 
 # Internal Server Error
 @app.errorhandler(500)
-def page_not_found(e):
+def internal_server_error(e):
     return render_template("500.html"), 500
+
+#Name Page
+@app.route('/name', methods=['GET', 'POST'])
+def name():
+    name = None
+    form = NamerForm()
+
+    #validate form
+    if form.validate_on_submit():
+        name = form.name.data
+        form.name.data = ''
+
+    return render_template("name.html", name=name, form=form)
+
