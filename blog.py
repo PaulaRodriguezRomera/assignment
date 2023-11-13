@@ -5,17 +5,34 @@ app = Flask(__name__)
 
 
 # Create a route decorator
+
+# localhost/
 @app.route('/')
 def index():
     return render_template("index.html")
+
+# localhost/logout
+@app.route('/logout')
+def logout():
+    return render_template("logout.html")
 
 # localhost/user/name
 @app.route('/user/<name>')
 def user(name):
     return render_template("user.html", user_name=name)
 
-# Custom Error Pages
+# localhost/aboutus
+@app.route('/aboutus')
+def aboutus():
+    return render_template("aboutus.html")
 
+# localhost/contact
+@app.route('/contact')
+def contact():
+    return render_template("contact.html")
+
+
+# Custom Error Pages
 # Invalid URL
 @app.errorhandler(404)
 def page_not_found(e):
