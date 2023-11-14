@@ -7,6 +7,7 @@ from datetime import datetime
 
 # Create a Flask instance.
 app = Flask(__name__)
+app.app_context().push()
 
 # add database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
