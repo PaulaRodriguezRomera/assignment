@@ -33,12 +33,14 @@ class UserForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
+
 # create a Form Class
 class NamerForm(FlaskForm):
     name = StringField("What's Your Name", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
 # Create route decorators
+
 # localhost/
 @app.route('/')
 def index():
