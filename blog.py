@@ -9,12 +9,20 @@ from datetime import datetime
 app = Flask(__name__)
 app.app_context().push()
 
-# add database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+# add databases
+
+# old SQLITE DB
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+
+# new MYSQL DB
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://our_user:password123@localhost/our_user'
+
 # secret key
 app.config['SECRET_KEY'] = "my secret key for now"
 # initialise the database
 db = SQLAlchemy(app)
+
+# update database record
 
 # create model
 class Users(db.Model):
@@ -100,6 +108,7 @@ def add_user():
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
         if user is None:
+            id = 1
             user = Users(name=form.name.data, email=form.email.data)
             db.session.add(user)
             db.session.commit()
