@@ -7,3 +7,8 @@ h1 {
      color: darkblue;
     font-size: 30px;
 }
+
+
+.container {
+    background-image: url("../profile.jpeg");
+}
