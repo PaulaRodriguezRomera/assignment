@@ -1,15 +1,37 @@
-{% extends 'base.html' %}
 
 {% block content %}
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Title</title>
+        <title>About us</title>
+        <style>
+           body {
+               margin: 0;
+               padding: 0;
+               background: url("{{ url_for('static', filename='about_us.jpg') }}");
+               background-size: cover;
+               background-repeat: no-repeat;
+               font-family: Arial, sans-serif;
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+               justify-content: center;
+               min-height: 100vh;
+           }
+
+            h1 {
+                font-size: 6em;
+                text-align: center;
+                margin-top: 50px;
+                color: lemonchiffon;
+            }
+        </style>
     </head>
+
     <body>
 
-    <p>ABOUT US</p>
+    <h1>ABOUT US</h1>
 
     </body>
     </html>
