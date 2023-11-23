@@ -71,6 +71,11 @@ class NamerForm(FlaskForm):
 def index():
     return render_template("index.html")
 
+# localhost/login
+@app.route('/login')
+def login():
+    return render_template("login.html")
+
 # localhost/logout
 @app.route('/logout')
 def logout():

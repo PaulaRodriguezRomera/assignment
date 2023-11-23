@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 
 {% block content %}
     <!DOCTYPE html>
@@ -5,28 +6,7 @@
     <head>
         <meta charset="UTF-8">
         <title>About us</title>
-        <style>
-           body {
-               margin: 0;
-               padding: 0;
-               background: url("{{ url_for('static', filename='about_us.jpg') }}");
-               background-size: cover;
-               background-repeat: no-repeat;
-               font-family: Arial, sans-serif;
-               display: flex;
-               flex-direction: column;
-               align-items: center;
-               justify-content: center;
-               min-height: 100vh;
-           }
-
-            h1 {
-                font-size: 6em;
-                text-align: center;
-                margin-top: 50px;
-                color: lemonchiffon;
-            }
-        </style>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/aboutus.css') }}">
     </head>
 
     <body>
