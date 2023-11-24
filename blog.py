@@ -96,6 +96,20 @@ def aboutus():
 def contact():
     return render_template("contact.html")
 
+# localhost/profile
+@app.route('/profile')
+def profile():
+    return render_template("profile.html")
+
+# localhost/article
+@app.route('/article')
+def article():
+    return render_template("article.html")
+
+# localhost/register
+@app.route('/register')
+def register():
+    return render_template("register.html")
 
 # Custom Error Pages
 # Invalid URL

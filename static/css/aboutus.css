@@ -17,3 +17,16 @@
                 margin-top: 50px;
                 color: lemonchiffon;
             }
+
+    /* Media query for smaller screens */
+    @media (max-width: 768px) {
+        body {
+            background-size: contain;
+        }
+
+        h1 {
+            font-size: 4em;
+            margin-top: 30px;
+        }
+
+    }

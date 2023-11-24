@@ -6,18 +6,22 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+      <ul class="navbar-nav justify-content-end ms-auto">
+
+           <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('login') }}">Login</a>
         </li>
            <li class="nav-item">
           <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
         </li>
-             <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('login') }}">Login</a>
-        </li>
           <li class="nav-item">
           <a class="nav-link" href="{{ url_for('user', name='name') }} ">Profile</a>
+        </li>
+           <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('article', name='article') }} ">Article</a>
+        </li>
+          <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('register', name='register') }} ">Register</a>
         </li>
            <li class="nav-item">
           <a class="nav-link" href="{{ url_for('aboutus') }}">About us</a>
@@ -25,19 +29,8 @@
            <li class="nav-item">
           <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
         </li>
-             <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('name') }}">Name</a>
-        </li>
-             <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('add_user') }}">Add User</a>
-        </li>
-
 
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-secondary" type="submit">Search</button>
-      </form>
     </div>
   </div>
 </nav>
