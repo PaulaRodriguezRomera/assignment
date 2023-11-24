@@ -10,9 +10,48 @@
     </head>
 
 
+
     <body>
 
-    <h1>Create account</h1>
+    <section class="vh-100">
+      <div class="container py-4 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card">
+              <div class="card-body p-5 text-center">
+
+                <div class="mb-md-5 mt-md-4 pb-5">
+
+                  <h2 class="fw-bold mb-5 text-uppercase">Create Account</h2>
+
+                    <div class="form-outline form-white mb-4">
+                    <input type="text" id="typeNameX" class="form-control form-control" placeholder="Name" />
+                  </div>
+
+                  <div class="form-outline form-white mb-4">
+                    <input type="email" id="typeEmailX" class="form-control form-control" placeholder="Email" />
+                  </div>
+
+                  <div class="form-outline form-white mb-4">
+                    <input type="password" id="typePasswordX" class="form-control form-control" placeholder="Password"/>
+                  </div>
+
+                  <button id="profile-btn" class="btn btn-light btn-outline-dark mt-3" type="submit">Sign Up</button>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>
+
+        <script>
+        document.getElementById('profile-btn').addEventListener('click', function () {
+            window.location.href = '/profile';
+        });
+    </script>
 
     </body>
     </html>

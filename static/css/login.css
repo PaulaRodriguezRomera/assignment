@@ -11,3 +11,8 @@
                min-height: 100vh;
            }
 
+  .card {
+       background-color: rgba(248, 248, 176, 0.7);
+       color: #000;
+       border-radius: 1rem;
+   }
