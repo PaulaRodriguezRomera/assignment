@@ -1,4 +1,4 @@
-    body {
+    .jumbo {
                margin: 0;
                padding: 0;
                background: url('../images/about_us.jpg') no-repeat;
@@ -11,22 +11,10 @@
                min-height: 100vh;
            }
 
-    h1 {
+    .jumbo h1 {
                 font-size: 6em;
                 text-align: center;
                 margin-top: 50px;
                 color: lemonchiffon;
             }
 
-    /* Media query for smaller screens */
-    @media (max-width: 768px) {
-        body {
-            background-size: contain;
-        }
-
-        h1 {
-            font-size: 4em;
-            margin-top: 30px;
-        }
-
-    }
