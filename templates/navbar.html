@@ -13,27 +13,28 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav justify-content-end ms-auto">
 
-           <li class="nav-item">
+            <li class="nav-item">
           <a class="nav-link" href="{{ url_for('login') }}">Login</a>
         </li>
+          <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('add_post', name='add_post') }} ">Add post</a>
+        </li>
            <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+          <a class="nav-link" href="{{ url_for('posts', name='posts') }} ">Posts</a>
         </li>
           <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('profile', name='profile') }} ">Profile</a>
+          <a class="nav-link" href="{{ url_for('aboutus') }}">About us</a>
         </li>
-           <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('article', name='article') }} ">Article</a>
+            <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
         </li>
           <li class="nav-item">
           <a class="nav-link" href="{{ url_for('register', name='register') }} ">Register</a>
         </li>
            <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('aboutus') }}">About us</a>
+          <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
         </li>
-           <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
-        </li>
+
 
       </ul>
     </div>

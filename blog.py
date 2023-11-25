@@ -4,6 +4,8 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from wtforms.widgets import TextArea
+from flask_migrate import Migrate
 
 # Create a Flask instance.
 app = Flask(__name__)
@@ -21,8 +23,57 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://our_user:password123@lo
 app.config['SECRET_KEY'] = "my secret key for now"
 # initialise the database
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
-# create model
+#Creates a Blog Post model
+class Posts(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255))
+    content = db.Column(db.Text)
+    author = db.Column(db.String(255))
+    date_posted = db.Column(db.DateTime, default=datetime.utcnow)
+    slug = db.Column(db.String(256))
+
+#Creates a Posts form
+class PostForm(FlaskForm):
+    title = StringField("Title", validators=[DataRequired()])
+    content = StringField("Content", validators=[DataRequired()], widget=TextArea())
+    author = StringField("Author", validators=[DataRequired()])
+    slug = StringField("Slug", validators=[DataRequired()])
+    submit = SubmitField("Submit")
+
+#Adds a page with posts
+@app.route('/posts')
+def posts():
+    #Grabs all the posts from the database
+    posts = Posts.query.order_by(Posts.date_posted)
+    return render_template("posts.html", posts=posts)
+
+
+
+#Adds a Post Page
+@app.route('/add_post', methods=['GET', 'POST'])
+def add_post():
+    form = PostForm()
+
+    if form.validate_on_submit():
+        post = Posts(title=form.title.data, content=form.content.data, author=form.author.data, slug=form.slug.data)
+        # Clear the form
+        form.title.data = ''
+        form.content.data = ''
+        form.author.data = ''
+        form.slug.data = ''
+
+        # Adds post data to database
+        db.session.add(post)
+        db.session.commit()
+        #Returns a message
+        flash("Blog Post Submitted Successfully!")
+
+    #Redirect to the webpage
+    return render_template("add_post.html", form=form)
+
+#creates User model
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
@@ -33,13 +84,13 @@ class Users(db.Model):
     def __repr__(self):
         return '<Name %r>' % self.name
 
-# create a Form Class
+# creates a Form Class
 class UserForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
-# update database record
+# updates database record
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
     form = UserForm()
@@ -59,12 +110,12 @@ def update(id):
         return render_template("update.html", form=form, name_to_update=name_to_update)
 
 
-# create a Form Class
+# creates a Form Class
 class NamerForm(FlaskForm):
     name = StringField("What's Your Name", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
-# Create route decorators
+# Creates route decorators
 
 # localhost/
 @app.route('/')
@@ -95,16 +146,6 @@ def aboutus():
 @app.route('/contact')
 def contact():
     return render_template("contact.html")
-
-# localhost/profile
-@app.route('/profile')
-def profile():
-    return render_template("profile.html")
-
-# localhost/article
-@app.route('/article')
-def article():
-    return render_template("article.html")
 
 # localhost/register
 @app.route('/register')

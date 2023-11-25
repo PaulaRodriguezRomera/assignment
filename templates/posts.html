@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>About us</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    </head>
+
+
+    <body>
+
+        <div class="jumbo">
+            <h1 class="display-4">Blog Posts</h1>
+       </div>
+
+        <br>
+        <div class="container">
+             {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+
+            <br>
+
+            {% for post in posts %}
+                <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
+                  <h2>{{ post.title }}</h2>
+                  By: {{ post.author }}<br>
+                  {{ post.date_posted }} | {{ post.slug }}<br>
+                  {{ post.content }}<br>
+                <br>
+                </div>
+            {% endfor %}
+        </div>
+
+    </body>
+    </html>
+{% endblock %}
