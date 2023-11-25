@@ -22,7 +22,7 @@ ckeditor = CKEditor(app)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 
 # new MYSQL DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://our_user:password123@localhost/our_user'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://u5n2qh0kc48564:pb58f4334c16f031a56822fc5581bddec20c08c0c40146cb6c1ef3e5c17e1e01f@ec2-54-236-100-37.compute-1.amazonaws.com:5432/dd7t5adp6mulsk'
 
 # secret key
 app.config['SECRET_KEY'] = "my secret key for now"
@@ -35,7 +35,7 @@ class Posts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255))
     content = db.Column(db.Text)
-    author = db.Column(db.String(255))
+    author = db.Column(db.String())
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
     slug = db.Column(db.String(256))
 
