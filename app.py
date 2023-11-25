@@ -7,8 +7,7 @@ from datetime import datetime
 from wtforms.widgets import TextArea
 from flask_migrate import Migrate
 from flask_ckeditor import CKEditor
-from sqlalchemy.dialects import postgresql
-
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 
 
 # Create a Flask instance.
@@ -24,7 +23,7 @@ ckeditor = CKEditor(app)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 
 # new MYSQL DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://u5n2qh0kc48564:pb58f4334c16f031a56822fc5581bddec20c08c0c40146cb6c1ef3e5c17e1e01f@ec2-54-236-100-37.compute-1.amazonaws.com:5432/dd7t5adp6mulsk'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://our_user:password123@localhost/our_user'
 
 # secret key
 app.config['SECRET_KEY'] = "my secret key for now"
@@ -37,7 +36,7 @@ class Posts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255))
     content = db.Column(db.Text)
-    author = db.Column(db.String())
+    author = db.Column(db.String(255))
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
     slug = db.Column(db.String(256))
 
@@ -124,8 +123,9 @@ def add_post():
     return render_template("add_post.html", form=form)
 
 #creates User model
-class Users(db.Model):
+class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), nullable=False, unique=True)
     name = db.Column(db.String(120), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
@@ -137,6 +137,7 @@ class Users(db.Model):
 # creates a Form Class
 class UserForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
+    username = StringField("Username", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
@@ -197,11 +198,6 @@ def aboutus():
 def contact():
     return render_template("contact.html")
 
-# localhost/register
-@app.route('/register')
-def register():
-    return render_template("register.html")
-
 # Custom Error Pages
 # Invalid URL
 @app.errorhandler(404)
@@ -245,3 +241,12 @@ def add_user():
         flash("User Added Successfully!")
     our_users = Users.query.order_by(Users.date_added)
     return render_template("add_user.html", form=form, name=name, our_users=our_users)
+
+
+# register form
+
+# localhost/register
+@app.route('/register', methods=['GET'])
+def show_register_form():
+    return render_template('register.html')
+
