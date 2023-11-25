@@ -8,7 +8,7 @@ from wtforms.widgets import TextArea
 from flask_migrate import Migrate
 
 # Create a Flask instance.
-app = Flask(__name__)
+app = Flask(__name__, template_folder="blog/templates")
 app.app_context().push()
 
 # add databases
