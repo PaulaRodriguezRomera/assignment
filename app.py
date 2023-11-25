@@ -7,6 +7,8 @@ from datetime import datetime
 from wtforms.widgets import TextArea
 from flask_migrate import Migrate
 from flask_ckeditor import CKEditor
+from sqlalchemy.dialects import postgresql
+
 
 
 # Create a Flask instance.
