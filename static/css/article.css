@@ -1,5 +1,5 @@
-  body {
-          margin: 0;
+   .jumbo {
+               margin: 0;
                padding: 0;
                background: url('../images/article.jpg') no-repeat;
                background-size: cover;
@@ -10,7 +10,8 @@
                justify-content: center;
                min-height: 100vh;
            }
-    h1 {
+
+    .jumbo h1 {
                 font-size: 6em;
                 text-align: center;
                 margin-top: 50px;
