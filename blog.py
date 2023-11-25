@@ -6,10 +6,15 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from wtforms.widgets import TextArea
 from flask_migrate import Migrate
+from flask_ckeditor import CKEditor
+
 
 # Create a Flask instance.
 app = Flask(__name__)
 app.app_context().push()
+
+#Adds CKEditor
+ckeditor = CKEditor(app)
 
 # add databases
 
@@ -42,14 +47,57 @@ class PostForm(FlaskForm):
     slug = StringField("Slug", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
+#Edits posts
+@app.route('/posts/edit/<int:id>', methods=['GET', 'POST'])
+def edit_post(id):
+    post = Posts.query.get_or_404(id)
+    form = PostForm()
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.author = form.author.data
+        post.slug = form.slug.data
+        post.content = form.content.data
+
+        #updates database
+        db.session.add(post)
+        db.session.commit()
+        flash("Post has been updated!")
+        return redirect(url_for('posts', id=post.id))
+    form.title.data = post.title
+    form.author.data = post.author
+    form.slug.data = post.slug
+    form.content.data = post.content
+    return render_template('edit_post.html', form=form)
+
+#Deletes posts
+@app.route('/posts/delete/<int:id>')
+def delete_post(id):
+    post_to_delete = Posts.query.get_or_404(id)
+
+    try:
+        db.session.delete(post_to_delete)
+        db.session.commit()
+
+        # Returns a message
+        flash("Blog Post was deleted!")
+
+        # Grab all the posts from the database
+        posts = Posts.query.order_by(Posts.date_posted)
+        return render_template("posts.html", posts=posts)
+
+    except:
+        # Returns an error message
+        flash("There was a problem, please try again!")
+        # Grab all the posts from the database
+        posts = Posts.query.order_by(Posts.date_posted)
+        return render_template("posts.html", posts=posts)
+
 #Adds a page with posts
 @app.route('/posts')
 def posts():
     #Grabs all the posts from the database
     posts = Posts.query.order_by(Posts.date_posted)
     return render_template("posts.html", posts=posts)
-
-
 
 #Adds a Post Page
 @app.route('/add_post', methods=['GET', 'POST'])
