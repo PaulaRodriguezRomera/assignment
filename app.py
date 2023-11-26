@@ -1,14 +1,14 @@
 from flask import Flask, redirect, url_for, render_template, flash, request
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, ValidationError
+from wtforms.validators import DataRequired, EqualTo, Length
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from wtforms.widgets import TextArea
 from flask_migrate import Migrate
 from flask_ckeditor import CKEditor
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # Create a Flask instance.
 app = Flask(__name__)
@@ -130,7 +130,22 @@ class Users(db.Model, UserMixin):
     email = db.Column(db.String(120), nullable=False, unique=True)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
 
-    # create a string
+    #Password work
+    password_hash = db.Column(db.String(128))
+
+
+    @property
+    def password(self):
+        raise AttributeError('Password is not a readable attribute!')
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def verify_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    #creates a string
     def __repr__(self):
         return '<Name %r>' % self.name
 
@@ -139,6 +154,8 @@ class UserForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
     username = StringField("Username", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired()])
+    password_hash = PasswordField('Password', validators=[DataRequired(), EqualTo('password_hash2', message='Passwords Must Match')])
+    password_hash2 = PasswordField('Confirm Password', validators=[DataRequired()])
     submit = SubmitField("Submit")
 
 # updates database record
@@ -160,6 +177,24 @@ def update(id):
     else:
         return render_template("update.html", form=form, name_to_update=name_to_update)
 
+# localhost/delete
+@app.route('/delete/<int:id>')
+def delete(id):
+    user_to_delete = Users.query.get_or_404(id)
+    name = None
+    form = UserForm()
+
+    try:
+        db.session.delete(user_to_delete)
+        db.session.commit()
+        flash("User deleted successfully!")
+
+        our_users = Users.query.order_by(Users.date_added)
+        return render_template("add_user.html", form=form, name=name, our_users=our_users)
+
+    except:
+        flash("There was a problem, please try again!")
+        return render_template("add_user.html", form=form, name=name, our_users=our_users)
 
 # creates a Form Class
 class NamerForm(FlaskForm):
@@ -231,22 +266,22 @@ def add_user():
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
         if user is None:
-            id = 1
-            user = Users(name=form.name.data, email=form.email.data)
+            #Hashes the password
+            hashed_pw = generate_password_hash(form.password_hash.data, 'pbkdf2:sha256')
+            user = Users(username=form.username.data, name=form.name.data, email=form.email.data, password_hash=hashed_pw)
+
             db.session.add(user)
             db.session.commit()
         name = form.name.data
         form.name.data = ''
+        form.name.data = ''
         form.email.data = ''
+        form.password_hash.data = ''
+
+
         flash("User Added Successfully!")
     our_users = Users.query.order_by(Users.date_added)
     return render_template("add_user.html", form=form, name=name, our_users=our_users)
 
 
-# register form
-
-# localhost/register
-@app.route('/register', methods=['GET'])
-def show_register_form():
-    return render_template('register.html')
 

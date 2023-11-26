@@ -2,52 +2,91 @@
 
 {% block content %}
 
-    {% for message in get_flashed_messages() %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-           Hey {{ name }}, {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    {% endfor %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+    </head>
+    <body>
 
-    {% if name %}
-        <h1>User Added</h1>
-        <br/><br><br/>
-        <table class="table table-hover table-bordered table-striped">
-         {% for our_user in our_users %}
-                <tr>
-                    <td>{{ our_user.id }}. <a href="{{ url_for('update', id=our_user.id) }}">{{ our_user.name }}</a> - {{ our_user.email }} </td>
-                </tr>
-            {% endfor %}
-        </table>
-     {% else %}
-        <h1>User List:</h1>
-        <br/>
-        <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
-            <form method="POST">
-                {{ form.hidden_tag() }}
-                {{ form.name.label(class="form-label") }}
-                {{ form.name(class="form-control") }}
-            <br/>
+    <br>
+    <div class="container">
+     <section class="vh-100">
+          <div class="container py-4 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card">
+                  <div class="card-body p-4 text-center">
 
-                {{ form.username.label(class="form-label") }}
-                {{ form.username(class="form-control") }}
-            <br/>
+                    <div class="mb-md-5 mt-md-6 pb-3">
 
-                {{ form.email.label(class="form-label") }}
-                {{ form.email(class="form-control") }}
-            <br/>
-                {{ form.submit(class="btn btn-secondary") }}
-        </form>
-        </div>
+                            {% for message in get_flashed_messages() %}
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                   Hey {{ name }}, {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endfor %}
+
+                            {% if name %}
+                                <h1>Register</h1>
+                                <br/><br><br/>
+                                <table class="table table-hover table-bordered table-striped">
+                                 {% for our_user in our_users %}
+                                        <tr>
+                                            <td>{{ our_user.id }}. <a href="{{ url_for('update', id=our_user.id) }}">{{ our_user.name }}</a> - {{ our_user.email }} - <a href="{{ url_for('delete', id=our_user.id) }}">Delete</a>  </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                             {% else %}
+                                <br/>
+
+                                <h3 class="fw-bold mb-5 text-uppercase">Create Account</h3>
+                                    <form method="POST">
+                                            {{ form.hidden_tag() }}
+                                            {{ form.name.label(class="form-label") }}
+                                            {{ form.name(class="form-control") }}
+                                        <br/>
+
+                                            {{ form.username.label(class="form-label") }}
+                                            {{ form.username(class="form-control") }}
+                                        <br/>
+
+                                            {{ form.email.label(class="form-label") }}
+                                            {{ form.email(class="form-control") }}
+                                        <br/>
+
+                                            {{ form.password_hash.label(class="form-label") }}
+                                            {{ form.password_hash(class="form-control") }}
+                                        <br/>
+
+                                            {{ form.password_hash2.label(class="form-label") }}
+                                            {{ form.password_hash2(class="form-control") }}
+                                        <br/>
+
+                                            {{ form.submit(class="btn btn-light btn-outline-dark mt-3") }}
+                                    </form>
 
 
-       <br/><br><br/>
-    <table class="table table-hover table-bordered table-striped">
-      {% for our_user in our_users %}
-                <tr>
-                    <td>{{ our_user.id }}. <a href="{{ url_for('update', id=our_user.id) }}">{{ our_user.name }}</a> - {{ our_user.email }}</td>
-                </tr>
-            {% endfor %}
-    </table>
-    {% endif %}
+
+                               <br/><br><br/>
+                            <table class="table table-hover table-bordered table-striped">
+                              {% for our_user in our_users %}
+                                        <tr>
+                                            <td>{{ our_user.id }}. <a href="{{ url_for('update', id=our_user.id) }}">{{ our_user.name }}</a> - {{ our_user.email }}  - <a href="{{ url_for('delete', id=our_user.id) }}">Delete</a> </td>
+                                        </tr>
+                                    {% endfor %}
+                            </table>
+                            {% endif %}
+                    </div>
+                  </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+    </section>
+</div>
+    </body>
+    </html>
     {% endblock %}

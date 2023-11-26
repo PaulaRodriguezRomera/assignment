@@ -18,3 +18,14 @@
                 color: lemonchiffon;
             }
 
+
+    .fixed-image {
+    height: 600px;
+    width: auto;
+    }
+
+    p {
+        text-align: justify;
+        line-height:2;
+        letter-spacing: 1.5px;
+    }

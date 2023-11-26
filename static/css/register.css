@@ -22,3 +22,8 @@
        color: #000;
        border-radius: 1rem;
    }
+
+      .form-label {
+          text-align: left;
+          display: block;
+      }

@@ -6,7 +6,7 @@
     <head>
         <meta charset="UTF-8">
         <title>About us</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/add_post.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/aboutus.css') }}">
     </head>
 
 
@@ -14,54 +14,63 @@
   <div class="jumbo">
         <h1 class="display-4">About Us</h1>
    </div>
-    <div class="container mt-5">
-  <div class="row">
-    <!-- First Container -->
-    <div class="col-md-6">
-      <h2>We are a team of dreamers and builders</h2>
-    </div>
-    <div class="col-md-6">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      </p>
-    </div>
-  </div>
+   <br>
 
-  <div class="row mt-4">
-    <!-- Second Container -->
-    <div class="col-md-6">
-      <img src="images/aboutus_one.jpg" class="img-fluid" alt="Image 1">
-    </div>
-    <div class="col-md-6">
-      <img src="images/aboutus_two.jpg" class="img-fluid" alt="Image 2">
-    </div>
-  </div>
+<div class="container">
+      <div class="row mt-4">
+        <!-- First Container -->
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename='images/aboutus_one.jpg') }}" class="img-fluid fixed-image" alt="Image 1">
+        </div>
+        <div class="col-md-6">
+            <h2>We are a Team of Dreamers and Builders</h2>
+          <p>
+              Meet the dynamic team behind our blog app – a group of passionate individuals with a shared vision and a flair for innovation.
+              Comprising seasoned developers, creative designers, and enthusiastic content creators, we are united by our love for technology and
+              a common goal to provide users with an exceptional blogging experience. Each member brings a unique set of skills to the table,
+              creating a collaborative environment where dreams are nurtured and transformed into reality.
+          </p>
+        </div>
+      </div>
+      <br>
 
-  <div class="row mt-4">
-    <!-- Third Container -->
-    <div class="col-md-6">
-        <h2>Our Story</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      </p>
+      <div class="row mt-4">
+        <!-- Third Container -->
+        <div class="col-md-6">
+            <h2>Our Story</h2>
+            <p>
+                Embark on a journey through the genesis of our blog app. It all started with a shared passion for empowering
+                individuals to share their stories and ideas with the world. Our founders, driven by the belief that everyone has a unique voice,
+                set out to create a platform that would break barriers and connect people through the art of storytelling.
+                As our app evolved, so did our commitment to fostering a community where diverse perspectives flourish,
+                making our story an ongoing narrative of growth, creativity, and inclusivity.
+            </p>
+        </div>
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename='images/aboutus_three.jpg') }}" class="img-fluid fixed-image" alt="Image 3">
+        </div>
     </div>
-    <div class="col-md-6">
-      <img src="../images/css/aboutus_three" class="img-fluid" alt="Image 3">
-    </div>
-  </div>
+      <br>
 
-  <div class="row mt-4">
-    <!-- Fourth Container -->
-    <div class="col-md-6">
-      <img src="../images/css/aboutus_four" class="img-fluid" alt="Image 4">
-    </div>
-    <div class="col-md-6">
-        <h2>How we think</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      </p>
-    </div>
-  </div>
+
+      <div class="row mt-4">
+        <!-- Fourth Container -->
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename='images/aboutus_four.jpg') }}" class="img-fluid fixed-image" alt="Image 4">
+        </div>
+        <div class="col-md-6">
+            <h2>How We Think</h2>
+          <p>
+              At the core of our philosophy is a commitment to thoughtful design and user-centric innovation.
+              We believe in the power of simplicity and functionality, ensuring that our blog app not only meets but
+              exceeds the expectations of our users. By constantly adapting to the ever-changing landscape of
+              technology and listening to the feedback of our community, we aim to stay ahead of the curve.
+              Our approach is characterized by a blend of strategic thinking, creativity,
+              and a genuine passion for enhancing the blogging experience for every user, one post at a time.
+          </p>
+        </div>
+      </div>
+      <br>
 </div>
 
     </body>
