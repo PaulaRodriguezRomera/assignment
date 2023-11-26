@@ -2,53 +2,31 @@
 
 {% block content %}
 
-    {% for message in get_flashed_messages() %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-           Hey {{ name }}, {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    {% endfor %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    </head>
+    <body>
+        <h2>Dashboard</h2>
 
-    {% if name %}
-        <h1>User Added</h1>
-        <br/><br><br/>
-        <table class="table table-hover table-bordered table-striped">
-         {% for our_user in our_users %}
-                <tr>
-                    <td>{{ our_user.id }}. <a href="{{ url_for('update', id=our_user.id) }}">{{ our_user.name }}</a> - {{ our_user.email }} </td>
-                </tr>
-            {% endfor %}
-        </table>
-     {% else %}
-        <h1>User List:</h1>
-        <br/>
-        <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
-            <form method="POST">
-                {{ form.hidden_tag() }}
-                {{ form.name.label(class="form-label") }}
-                {{ form.name(class="form-control") }}
-            <br/>
+       <div class="card">
+          <div class="card-header">
+            {{ current_user.name }}
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Welcome to your Dashboard</h5>
+            <p class="card-text">
+                <strong>Name: </strong>{{ current_user.name }}<br>
+                <strong>Username: </strong>{{ current_user.username }}<br>
+                <strong>User id: </strong>{{ current_user.id }}<br>
+                <strong>Email: </strong>{{ current_user.email }}<br>
+            </p>
+            <a href="{{ url_for('logout')}}" class="btn btn-secondary btn-small">Logout</a>
+          </div>
+       </div>
 
-                {{ form.username.label(class="form-label") }}
-                {{ form.username(class="form-control") }}
-            <br/>
-
-                {{ form.email.label(class="form-label") }}
-                {{ form.email(class="form-control") }}
-            <br/>
-
-                {{ form.submit(class="btn btn-secondary") }}
-        </form>
-        </div>
-
-
-       <br/><br><br/>
-    <table class="table table-hover table-bordered table-striped">
-      {% for our_user in our_users %}
-                <tr>
-                    <td>{{ our_user.id }}. <a href="{{ url_for('update', id=our_user.id) }}">{{ our_user.name }}</a> - {{ our_user.email }}</td>
-                </tr>
-            {% endfor %}
-    </table>
-    {% endif %}
+    </body>
+    </html>
     {% endblock %}

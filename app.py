@@ -31,6 +31,56 @@ app.config['SECRET_KEY'] = "my secret key for now"
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
+
+#Flask login musts
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return Users.query.get(int(user_id))
+
+
+#Craetes login form
+class LoginForm(FlaskForm):
+    username = StringField("Username", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    submit = SubmitField("Submit")
+
+#Creates login page
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = Users.query.filter_by(username=form.username.data).first()
+        if user:
+            if check_password_hash(user.password_hash, form.password.data):
+                login_user(user)
+                flash("Login Successful!")
+                return redirect(url_for('dashboard'))
+            else:
+                flash("Wrong password, please try again!")
+        else:
+            flash("That user does not exit, please try again!")
+
+    return render_template("login.html", form=form)
+
+#Creates Logout page
+@app.route('/logout', methods=['GET', 'POST'])
+@login_required
+def logout():
+    logout_user()
+    flash("You have been logged out! Thanks for using Bblog!")
+    return redirect(url_for('login'))
+
+
+#Creates dashboard page
+@app.route('/dashboard', methods=['GET', 'POST'])
+@login_required
+def dashboard():
+    return render_template("dashboard.html")
+
 #Creates a Blog Post model
 class Posts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -208,16 +258,6 @@ class NamerForm(FlaskForm):
 def index():
     return render_template("index.html")
 
-# localhost/login
-@app.route('/login')
-def login():
-    return render_template("login.html")
-
-# localhost/logout
-@app.route('/logout')
-def logout():
-    return render_template("logout.html")
-
 # localhost/user/name
 @app.route('/user/<name>')
 def user(name):
@@ -274,7 +314,7 @@ def add_user():
             db.session.commit()
         name = form.name.data
         form.name.data = ''
-        form.name.data = ''
+        form.username.data = ''
         form.email.data = ''
         form.password_hash.data = ''
 

@@ -13,22 +13,31 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav justify-content-end ms-auto">
 
+          {% if current_user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+            </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+            </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('add_post', name='add_post') }} ">Add post</a>
+            </li>
+          {% else %}
+               <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+            </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('add_user') }}">Register</a>
+            </li>
+          {% endif %}
 
-            <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('login') }}">Login</a>
-        </li>
-          <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('add_post', name='add_post') }} ">Add post</a>
-        </li>
            <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('posts', name='posts') }} ">Posts</a>
-        </li>
-          <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('aboutus') }}">About us</a>
-        </li>
+                <a class="nav-link" href="{{ url_for('posts', name='posts') }} ">Posts</a>
+            </li>
             <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('add_user') }}">Register</a>
-        </li>
+                <a class="nav-link" href="{{ url_for('aboutus') }}">About us</a>
+            </li>
 
       </ul>
     </div>
