@@ -13,11 +13,11 @@
     <br>
     <div class="container">
      <section class="vh-100">
-          <div class="container py-4 h-100">
+          <div class="container py-4">
             <div class="row d-flex justify-content-center align-items-center h-100">
-              <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+              <div class="col-12 col-md-6 col-lg-6 col-xl-5">
                 <div class="card">
-                  <div class="card-body p-4 text-center">
+                  <div class="card-body text-center">
 
                     <div class="mb-md-5 mt-md-6 pb-3">
 
@@ -29,8 +29,7 @@
                             {% endfor %}
 
                             {% if name %}
-                                <h1>Register</h1>
-                                <br/><br><br/>
+
                                 <table class="table table-hover table-bordered table-striped">
                                  {% for our_user in our_users %}
                                         <tr>
@@ -41,7 +40,7 @@
                              {% else %}
                                 <br/>
 
-                                <h3 class="fw-bold mb-5 text-uppercase">Create Account</h3>
+                                <h3 class="fw-bold mb-3 text-uppercase">Create Account</h3>
                                     <form method="POST">
                                             {{ form.hidden_tag() }}
                                             {{ form.name.label(class="form-label") }}
@@ -67,9 +66,6 @@
                                             {{ form.submit(class="btn btn-light btn-outline-dark mt-3") }}
                                     </form>
 
-
-
-                               <br/><br><br/>
                             <table class="table table-hover table-bordered table-striped">
                               {% for our_user in our_users %}
                                         <tr>
